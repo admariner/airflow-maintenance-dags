@@ -5,6 +5,7 @@ airflow trigger_dag --conf '[curly-braces]"maxLogAgeInDays":30[curly-braces]' ai
 --conf options:
     maxLogAgeInDays:<INT> - Optional
 """
+
 import logging
 import os
 import time
@@ -158,7 +159,7 @@ echo "Finished Running Cleanup Process"
 """
 
 create_log_cleanup_script = BashOperator(
-    task_id=f'create_log_cleanup_script',
+    task_id='create_log_cleanup_script',
     bash_command=f"""
     echo '{log_cleanup}' > {TEMP_LOG_CLEANUP_SCRIPT_PATH}
     chmod +x {TEMP_LOG_CLEANUP_SCRIPT_PATH}
@@ -177,7 +178,9 @@ create_log_cleanup_script = BashOperator(
         fi
     done
     """,
-    dag=dag)
+    dag=dag,
+)
+
 
 for host in AIRFLOW_HOSTS.split(","):
     for DIR_ID, DIRECTORY in enumerate(DIRECTORIES_TO_DELETE):

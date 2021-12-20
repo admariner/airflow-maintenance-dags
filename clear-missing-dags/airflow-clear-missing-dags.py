@@ -77,7 +77,7 @@ def clear_missing_dags_fn(**context):
         # Check if it is a zip-file
         if dag.fileloc is not None and '.zip/' in dag.fileloc:
             index = dag.fileloc.rfind('.zip/') + len('.zip')
-            fileloc = dag.fileloc[0:index]
+            fileloc = dag.fileloc[:index]
         else:
             fileloc = dag.fileloc
 
