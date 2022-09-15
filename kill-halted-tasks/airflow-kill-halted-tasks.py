@@ -89,7 +89,7 @@ def parse_process_linux_string(line):
         logging.info("DEBUG: Processing Line: " + str(line))
     full_regex_match = re.search(full_regex, line)
     if DEBUG:
-        for index in range(0, (len(full_regex_match.groups()) + 1)):
+        for index in range(len(full_regex_match.groups()) + 1):
             group = full_regex_match.group(index)
             logging.info(
                 "DEBUG: index: " + str(index) + ", group: " + str(group)
@@ -102,7 +102,7 @@ def parse_process_linux_string(line):
         logging.info("DEBUG: Processing Command: " + str(command))
     airflow_run_regex_match = re.search(airflow_run_regex, command)
     if DEBUG:
-        for index in range(0, (len(airflow_run_regex_match.groups()) + 1)):
+        for index in range(len(airflow_run_regex_match.groups()) + 1):
             group = airflow_run_regex_match.group(index)
             logging.info(
                 "DEBUG: index: " + str(index) + ", group: " + str(group)
@@ -337,7 +337,7 @@ def kill_halted_tasks_function(**context):
     # Listing processes that will be killed
     logging.info("")
     logging.info("Processes Marked to Kill: ")
-    if len(processes_to_kill) > 0:
+    if processes_to_kill:
         for process in processes_to_kill:
             logging.info(str(process))
     else:
@@ -347,7 +347,7 @@ def kill_halted_tasks_function(**context):
     logging.info("")
     if ENABLE_KILL:
         logging.info("Performing Kill...")
-        if len(processes_to_kill) > 0:
+        if processes_to_kill:
             for process in processes_to_kill:
                 logging.info("Killing Process: " + str(process))
                 kill_command = "kill -9 " + str(process["pid"])

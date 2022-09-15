@@ -141,15 +141,13 @@ def delete_old_backups_fn(**context):
     logging.info("backup_folders: " + str(backup_folders))
     logging.info("")
 
-    cnt = 0
-    for backup_folder in backup_folders:
+    for cnt, backup_folder in enumerate(backup_folders):
         logging.info(
             "cnt = " + str(cnt) + ", backup_folder = " + str(backup_folder)
         )
         if cnt > BACKUP_RETENTION_COUNT:
             logging.info("Deleting Backup Folder: " + str(backup_folder))
             execute_shell_cmd("rm -rf " + str(backup_folder))
-        cnt += 1
 
 
 delete_old_backups_op = PythonOperator(
